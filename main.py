@@ -6,28 +6,27 @@ computer_cards = []
 computer_total = 0
 
 player_cards = []
-player_tot = 0
+
 
 game = True
 
-def calc_player_cards():
-    player_total = 0
-    for card in player_cards:
+def calc_cards(array):
+    total = 0
+    for card in array:
         ace = False
         if card in ("J", "K", "Q", "10"):
-            player_total += 10
+            total += 10
         elif card == "A":
             ace = True
         else:
             value = int(card)
-            player_total += value
+            total += value
         if ace == True:
-            if player_total + 11 > 21:
-                player_total += 1
+            if total + 11 > 21:
+                total += 1
             else:
-                player_total += 11
-    player_tot = player_total            
-    print(player_tot)
+                total += 11   
+    return total
 
 while game:
     computer_cards.append(random.choice(cards))
@@ -35,27 +34,31 @@ while game:
     player_cards.append(random.choice(cards))
     print(computer_cards)
     print(player_cards)
-    draw = True
-    while draw:
-      calc_player_cards()
-      while player_tot < 21:
-        hit = input("Do you want to hit? y/n: ")
-        if hit.lower() == "y" and player_tot < 21:
-            player_cards.append(random.choice(cards))
-            print(player_cards)
-            calc_player_cards()
-        else:
-            draw = False
+    player_tot = calc_cards(player_cards)
     print(player_tot)
-
-
-    for card in computer_cards:
-        ace = False
-        if card in ("J", "K", "Q", "10"):
-            computer_total += 10
-        elif card == "A":
-            ace = True
-        else:
-            value = int(card)
-            computer_total += value
+    calc_cards(player_cards)
+    while player_tot < 21:
+      hit = input("Do you want to hit? y/n: ")
+      if hit.lower() == "y" and player_tot < 21:
+          player_cards.append(random.choice(cards))
+          print(player_cards)
+          player_tot = calc_cards(player_cards)
+          print(player_tot)
+    print("End")
+    if player_tot > 21:
+        print("You Lose!")
+        game = False
+        again = input("Play again? y/n")
+        if again == "y":
+            player_cards = []
+            computer_cards = []
+            game = True
+    elif player_tot == 21:
+        print("BLACKJACK!")
+        game = False
+        again = input("Play again? y/n")
+        if again == "y":
+            player_cards = []
+            computer_cards = []
+            game = True
     

@@ -95,8 +95,8 @@ def blackjack():
               clear()
               blackjack()
           else:
-              break
-      elif computer_total > player_total:
+              return
+      if computer_total > player_total:
           clear()
           print(f"Player Cards: {player_cards}")
           print(f"Player Total: {player_total}")
@@ -112,6 +112,6 @@ def blackjack():
               clear()
               blackjack()
           else:
-              break
+              return
     
 blackjack()
